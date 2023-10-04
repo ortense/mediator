@@ -17,11 +17,3 @@ export type Mediator<T extends MediatorContext> = {
   send(event: string, reducer?: MediatorContextReducer<T>): void,
   getContext(): Readonly<T>
 }
-
-interface MyContext extends MediatorContext {
-  value: string,
-  active: boolean,
-  nested: {
-    products: number[]
-  }
-}
