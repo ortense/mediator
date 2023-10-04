@@ -1,13 +1,13 @@
 {
-  "name": "context-mediator",
+  "name": "@ortense/mediator",
   "version": "0.1.0",
-  "main": "src/index.ts",
+  "main": "dist/index.js",
   "license": "MIT",
-  "type": "module",
   "scripts": {
     "test": "node --loader tsx --test **/*.spec.ts",
     "test:watch": "node --loader tsx --test --watch **/*.spec.ts",
-    "test:coverage": "node --loader tsx --experimental-test-coverage --test **/*.spec.ts"
+    "test:coverage": "node --loader tsx --experimental-test-coverage --test **/*.spec.ts",
+    "build": "tsc"
   },
   "devDependencies": {
     "@types/node": "^20.5.1",
