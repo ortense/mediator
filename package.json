@@ -1,0 +1,17 @@
+{
+  "name": "context-mediator",
+  "version": "0.1.0",
+  "main": "src/index.ts",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "node --loader tsx --test **/*.spec.ts",
+    "test:watch": "node --loader tsx --test --watch **/*.spec.ts",
+    "test:coverage": "node --loader tsx --experimental-test-coverage --test **/*.spec.ts"
+  },
+  "devDependencies": {
+    "@types/node": "^20.5.1",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.6"
+  }
+}
