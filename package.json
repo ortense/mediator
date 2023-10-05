@@ -1,6 +1,7 @@
 {
   "name": "@ortense/mediator",
   "version": "0.1.0",
+  "description": "A minimal implementation for a dependency-free event broker with internal context for front-end",
   "main": "dist/index.js",
   "license": "MIT",
   "type": "module",
@@ -14,5 +15,16 @@
     "@types/node": "^20.5.1",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
-  }
+  },
+  "keywords": [
+    "mediator",
+    "mediator design pattern",
+    "observer",
+    "pubsub",
+    "pubsub",
+    "events",
+    "emitter",
+    "eventemitter",
+    "dependency-free"
+  ]
 }
