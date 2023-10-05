@@ -1,0 +1,7 @@
+src
+src/*
+.nvmrc
+config
+dist/config
+tsconfig.json
+mediator.jpg

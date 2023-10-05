@@ -1,18 +1,36 @@
 {
   "name": "@ortense/mediator",
-  "version": "0.1.0",
+  "version": "1.0.0-alpha",
   "description": "A minimal implementation for a dependency-free event broker with internal context for front-end",
-  "main": "dist/index.js",
-  "license": "MIT",
+  "author": "Marcus Ortense",
+  "homepage": "https://github.com/ortense/mediator",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ortense/mediator"
+  },
   "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "require": {
+        "types": "./dist/index.d.cts",
+        "default": "./dist/index.cjs"
+      }
+    }
+  },
+  "license": "MIT",
   "scripts": {
-    "test": "node --loader tsx --test **/*.spec.ts",
-    "test:watch": "node --loader tsx --test --watch **/*.spec.ts",
-    "test:coverage": "node --loader tsx --experimental-test-coverage --test **/*.spec.ts",
-    "build": "tsc"
+    "test": "tsx --test **/*.spec.ts",
+    "test:watch": "tsx --test --watch **/*.spec.ts",
+    "build": "tsup"
   },
   "devDependencies": {
-    "@types/node": "^20.5.1",
+    "tsup": "^7.2.0",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
   },
@@ -25,6 +43,7 @@
     "events",
     "emitter",
     "eventemitter",
-    "dependency-free"
+    "dependency-free",
+    "typescript"
   ]
 }
