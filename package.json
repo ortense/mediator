@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "main": "dist/index.js",
   "license": "MIT",
+  "type": "module",
   "scripts": {
     "test": "node --loader tsx --test **/*.spec.ts",
     "test:watch": "node --loader tsx --test --watch **/*.spec.ts",
