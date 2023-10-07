@@ -12,8 +12,8 @@ export type MediatorEventListener<T extends MediatorContext> = (ctx: Readonly<T>
 export type MediatorContextModifier<T extends MediatorContext> = (ctx: Readonly<T>) => T
 
 export type Mediator<T extends MediatorContext> = {
-  on(event: string, handler: MediatorEventListener<T>): void,
-  off(event: string, handler: MediatorEventListener<T>): void,
+  on(event: string, listener: MediatorEventListener<T>): void,
+  off(event: string, listener: MediatorEventListener<T>): void,
   send(event: string, modifier?: MediatorContextModifier<T>): void,
   getContext(): Readonly<T>
 }

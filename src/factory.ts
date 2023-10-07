@@ -7,18 +7,18 @@ export function createMediator <T extends MediatorContext>(initialContext: T): M
   let context = freezeCopy(initialContext)
 
   return {
-    on: (event, handler) => {
-      const eventHandlers = handlers.get(event) || []
-      handlers.set(event, [...eventHandlers, handler])
+    on: (event, listener) => {
+      const listeners = handlers.get(event) || []
+      handlers.set(event, [...listeners, listener])
     },
 
-    off: (event, handler) => {
-      const eventHandlers = handlers.get(event)
-      if(eventHandlers === undefined) {
+    off: (event, listener) => {
+      const listeners = handlers.get(event)
+      if(listeners === undefined) {
         return
       }
 
-      handlers.set(event, eventHandlers.filter((fn) => fn !== handler))
+      handlers.set(event, listeners.filter((fn) => fn !== listener))
     },
 
     send: (event, modifier) => {
