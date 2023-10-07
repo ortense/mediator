@@ -6,3 +6,4 @@ dist/config
 tsconfig.json
 mediator.jpg
 tsup.config.js
+.editorconfig
