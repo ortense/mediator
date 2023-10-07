@@ -9,11 +9,11 @@ export type Dictionary = { [member: string]: Value }
 export type MediatorContext = Dictionary
 
 export type MediatorEventListener<T extends MediatorContext> = (ctx: Readonly<T>) => void
-export type MediatorContextReducer<T extends MediatorContext> = (ctx: Readonly<T>) => T
+export type MediatorContextModifier<T extends MediatorContext> = (ctx: Readonly<T>) => T
 
 export type Mediator<T extends MediatorContext> = {
   on(event: string, handler: MediatorEventListener<T>): void,
   off(event: string, handler: MediatorEventListener<T>): void,
-  send(event: string, reducer?: MediatorContextReducer<T>): void,
+  send(event: string, modifier?: MediatorContextModifier<T>): void,
   getContext(): Readonly<T>
 }

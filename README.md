@@ -135,13 +135,13 @@ function toggleActive(ctx: Readonly<MyContext>) {
 myMediator.send('toggle', toggleActive)
 ```
 
-If you prefer you could use the `MediatorContextReducer` type.
+If you prefer you could use the `MediatorContextModifier` type.
 
 ```typescript
-import { MediatorContextReducer } from '@ortense/mediator'
+import { MediatorContextModifier } from '@ortense/mediator'
 import { myMediator, MyContext } from './my-mediator'
 
-const toggleActive: MediatorContextReducer<MyContext> = (ctx) => ({
+const toggleActive: MediatorContextModifier<MyContext> = (ctx) => ({
   ...ctx,
   active: !ctx.active
 })

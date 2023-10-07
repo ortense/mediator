@@ -21,9 +21,9 @@ export function createMediator <T extends MediatorContext>(initialContext: T): M
       handlers.set(event, eventHandlers.filter((fn) => fn !== handler))
     },
 
-    send: (event, reducer) => {
-      if(reducer) {
-        context = freezeCopy(reducer(context))
+    send: (event, modifier) => {
+      if(modifier) {
+        context = freezeCopy(modifier(context))
       }
 
       const eventHandlers = handlers.get(event)
