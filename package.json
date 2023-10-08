@@ -28,9 +28,15 @@
     "test": "tsx --test **/*.spec.ts",
     "test:watch": "tsx --test --watch **/*.spec.ts",
     "build": "tsup",
-    "publish": "npm run build && npm publish --access public"
+    "publish": "npm run build && npm publish --access public",
+    "lint": "eslint src",
+    "lint:fix": "eslint --fix src"
   },
   "devDependencies": {
+    "@types/node": "^20.8.3",
+    "@typescript-eslint/eslint-plugin": "^6.7.4",
+    "@typescript-eslint/parser": "^6.7.4",
+    "eslint": "^8.51.0",
     "tsup": "^7.2.0",
     "tsx": "^3.12.7",
     "typescript": "^5.1.6"
