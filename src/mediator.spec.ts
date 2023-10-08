@@ -6,7 +6,7 @@ type Context = { done: boolean }
 
 describe('mediator context', () => {
   describe('when mediator is created', () => {
-    it('should not use initial context as reference', (test) => {
+    it('should not use initial context as reference', () => {
       const initial = { done: false }
       const mediator = createMediator(initial)
       assert.notEqual(initial, mediator.getContext())
