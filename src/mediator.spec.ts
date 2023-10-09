@@ -62,5 +62,12 @@ describe('mediator context', () => {
         expect(listenerTwo).toHaveBeenCalledTimes(1)
       })
     })
+
+    describe('when try remove an invalid listener', () => {
+      it('should return undefined', () => {
+        const mediator = createMediator({ done: false })
+        expect(mediator.off('test', () => {})).toBeUndefined()
+      })
+    })
   })
 })
