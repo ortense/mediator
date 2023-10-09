@@ -1,5 +1,4 @@
-import { describe, it, mock } from 'node:test'
-import assert from 'assert'
+import { vitest, describe, it, expect } from 'vitest'
 import { createMediator } from './factory'
 
 type Context = { done: boolean }
@@ -9,58 +8,58 @@ describe('mediator context', () => {
     it('should not use initial context as reference', () => {
       const initial = { done: false }
       const mediator = createMediator(initial)
-      assert.notEqual(initial, mediator.getContext())
-      assert.deepEqual(initial, mediator.getContext())
-      assert.notEqual(mediator.getContext(), mediator.getContext())
+      expect(initial).toEqual(mediator.getContext())
+      expect(initial).not.toBe(mediator.getContext())
+      expect(mediator.getContext()).not.toBe(mediator.getContext())
     })
   })
 
   describe('dispatch', () => {
-    it('it should call event reducer', () => {
+    it('it should call event modifier', () => {
       const initial = { done: false }
       const mediator = createMediator(initial)
-      const toggle = mock.fn((ctx: Context) => ({ done: !ctx.done }))
+      const toggle = vitest.fn((ctx: Context) => ({ done: !ctx.done }))
       
       mediator.send('toggle', toggle)
 
-      assert.deepEqual(mediator.getContext(), { done: true })
-      assert.deepEqual(toggle.mock.calls[0].arguments, [{ done: false }])
-      assert.equal(toggle.mock.callCount(), 1)
+      expect(mediator.getContext()).toEqual({ done: true })
+      expect(toggle).toHaveBeenCalledWith({ done: false })
+      expect(toggle).toHaveBeenCalledTimes(1)
     })
 
-    it('it should call event handlers', () => {
+    it('it should call event listeners', () => {
       const initial = { done: false }
       const mediator = createMediator(initial)
       const toggle = (ctx: Context) => ({ done: !ctx.done })
-      const handler1 = mock.fn()
-      const handler2 = mock.fn()
+      const listenerOne = vitest.fn()
+      const listenerTwo = vitest.fn()
       
-      mediator.on('toggle', handler1)
-      mediator.on('toggle', handler2)
+      mediator.on('toggle', listenerOne)
+      mediator.on('toggle', listenerTwo)
       mediator.send('toggle', toggle)
 
-      assert.equal(handler1.mock.callCount(), 1)
-      assert.equal(handler2.mock.callCount(), 1)
-      assert.deepEqual(handler1.mock.calls[0].arguments, [{ done: true }])
-      assert.deepEqual(handler2.mock.calls[0].arguments, [{ done: true }])
+      expect(listenerOne).toHaveBeenCalledTimes(1)
+      expect(listenerOne).toHaveBeenCalledTimes(1)
+      expect(listenerOne).toBeCalledWith({ done: true })
+      expect(listenerTwo).toBeCalledWith({ done: true })
     })
 
-    describe('when remove event handler', () => {
-      it('it should call event handlers', () => {
+    describe('when remove event listener', () => {
+      it('it should call event listeners', () => {
         const initial = { done: false }
         const mediator = createMediator(initial)
         const toggle = (ctx: Context) => ({ done: !ctx.done })
-        const handler1 = mock.fn()
-        const handler2 = mock.fn()
+        const listenerOne = vitest.fn()
+        const listenerTwo = vitest.fn()
         
-        mediator.on('toggle', handler1)
-        mediator.on('toggle', handler2)
+        mediator.on('toggle', listenerOne)
+        mediator.on('toggle', listenerTwo)
         mediator.send('toggle', toggle)
-        mediator.off('toggle', handler2)
+        mediator.off('toggle', listenerTwo)
         mediator.send('toggle', toggle)
   
-        assert.equal(handler1.mock.callCount(), 2)
-        assert.equal(handler2.mock.callCount(), 1)
+        expect(listenerOne).toHaveBeenCalledTimes(2)
+        expect(listenerTwo).toHaveBeenCalledTimes(1)
       })
     })
   })

@@ -25,21 +25,22 @@
   },
   "license": "MIT",
   "scripts": {
-    "test": "tsx --test **/*.spec.ts",
-    "test:watch": "tsx --test --watch **/*.spec.ts",
+    "test": "vitest run",
+    "test:watch": "vitest watch",
+    "test:coverage": "vitest run --coverage",
     "build": "tsup",
     "publish": "npm run build && npm publish --access public",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
   },
   "devDependencies": {
-    "@types/node": "^20.8.3",
     "@typescript-eslint/eslint-plugin": "^6.7.4",
     "@typescript-eslint/parser": "^6.7.4",
+    "@vitest/coverage-v8": "^0.34.6",
     "eslint": "^8.51.0",
     "tsup": "^7.2.0",
-    "tsx": "^3.12.7",
-    "typescript": "^5.1.6"
+    "typescript": "^5.1.6",
+    "vitest": "^0.34.6"
   },
   "keywords": [
     "mediator",
