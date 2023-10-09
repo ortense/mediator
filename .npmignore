@@ -1,10 +1,10 @@
 src
 src/*
 .nvmrc
-config
-dist/config
 tsconfig.json
 mediator.jpg
 tsup.config.js
 .editorconfig
 .eslintrc.yml
+coverage
+coverage/*
