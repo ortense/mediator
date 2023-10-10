@@ -29,7 +29,7 @@
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
     "build": "tsup",
-    "publish": "npm run build && npm publish --access public",
+    "publish": "pnpm test && pnpm lint && pnpm build && npm publish --access public",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
   },
