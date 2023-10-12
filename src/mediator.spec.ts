@@ -67,5 +67,15 @@ describe('mediator context', () => {
         expect(mediator.off('test', () => {})).toBeUndefined()
       })
     })
+
+    describe('when context is overwrited', () => {
+      it('should preserve the original context', () => {
+        const mediator = createMediator(initial)
+        const expected = { done: true }
+        mediator.send('toggle', (ctx) => ({ done: !ctx.done }))
+        mediator.send('overwrite', () => ({}) as Context)
+        expect(mediator.getContext()).toEqual(expected)
+      })
+    })
   })
 })
