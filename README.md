@@ -44,7 +44,7 @@ const initialContext: MyContext = {
 Then create the mediator object:
 
 ```typescript
-export const myMediator = createMediatorContext(initialContext)
+export const myMediator = createMediator(initialContext)
 ```
 
 The complete setup file should look like this:
@@ -74,6 +74,16 @@ export const myMediator = createMediator(initialContext)
 ### Events
 
 The mediator use simple strings to identify events, think of it as a unique identifier to be used to send or listen to events.
+
+Optionally, you can define a type that extends from `string` to represent the events that your mediator has.
+
+```typescript
+type MyEvents = 'value:change' | 'active:toggle' | 'item:added' | 'item:removed'
+
+export const myMediator = createMediator<MyContext, MyEvents>(initialContext)
+```
+
+This is a good practice to help developers who will interact with the mediator, providing predictability of the events that can be listened or send.
 
 ### Listening to events
 

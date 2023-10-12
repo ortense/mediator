@@ -2,11 +2,11 @@ import { vitest, describe, it, expect } from 'vitest'
 import { createMediator } from './factory'
 
 type Context = { done: boolean }
+const initial = { done: false }
 
 describe('mediator context', () => {
   describe('when mediator is created', () => {
     it('should not use initial context as reference', () => {
-      const initial = { done: false }
       const mediator = createMediator(initial)
       expect(initial).toEqual(mediator.getContext())
       expect(initial).not.toBe(mediator.getContext())
@@ -16,8 +16,8 @@ describe('mediator context', () => {
 
   describe('dispatch', () => {
     it('it should call event modifier', () => {
-      const initial = { done: false }
-      const mediator = createMediator(initial)
+      type EventName = 'toggle'
+      const mediator = createMediator<Context, EventName>(initial)
       const toggle = vitest.fn((ctx: Context) => ({ done: !ctx.done }))
       
       mediator.send('toggle', toggle)
@@ -28,7 +28,6 @@ describe('mediator context', () => {
     })
 
     it('it should call event listeners', () => {
-      const initial = { done: false }
       const mediator = createMediator(initial)
       const toggle = (ctx: Context) => ({ done: !ctx.done })
       const listenerOne = vitest.fn()
@@ -46,7 +45,6 @@ describe('mediator context', () => {
 
     describe('when remove event listener', () => {
       it('it should call event listeners', () => {
-        const initial = { done: false }
         const mediator = createMediator(initial)
         const toggle = (ctx: Context) => ({ done: !ctx.done })
         const listenerOne = vitest.fn()
@@ -65,7 +63,7 @@ describe('mediator context', () => {
 
     describe('when try remove an invalid listener', () => {
       it('should return undefined', () => {
-        const mediator = createMediator({ done: false })
+        const mediator = createMediator(initial)
         expect(mediator.off('test', () => {})).toBeUndefined()
       })
     })
