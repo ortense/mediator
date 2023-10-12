@@ -2,8 +2,11 @@ import { Mediator, MediatorContext, MediatorEventListener } from './types'
 
 const freezeCopy = <T>(ctx: T): T => Object.freeze(JSON.parse(JSON.stringify(ctx)))
 
-export function createMediator <T extends MediatorContext>(initialContext: T): Mediator<T> {
-  const handlers = new Map<string, Array<MediatorEventListener<T>>>()
+export function createMediator <
+  Context extends MediatorContext, 
+  EventName extends string = string,
+>(initialContext: Context): Mediator<Context, EventName> {
+  const handlers = new Map<string, Array<MediatorEventListener<Context>>>()
   let context = freezeCopy(initialContext)
 
   return {

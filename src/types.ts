@@ -11,9 +11,9 @@ export type MediatorContext = Dictionary
 export type MediatorEventListener<T extends MediatorContext> = (ctx: Readonly<T>) => void
 export type MediatorContextModifier<T extends MediatorContext> = (ctx: Readonly<T>) => T
 
-export type Mediator<T extends MediatorContext> = {
-  on(event: string, listener: MediatorEventListener<T>): void,
-  off(event: string, listener: MediatorEventListener<T>): void,
-  send(event: string, modifier?: MediatorContextModifier<T>): void,
+export type Mediator<T extends MediatorContext, EventName extends string> = {
+  on(event: EventName, listener: MediatorEventListener<T>): void,
+  off(event: EventName, listener: MediatorEventListener<T>): void,
+  send(event: EventName, modifier?: MediatorContextModifier<T>): void,
   getContext(): Readonly<T>
 }
