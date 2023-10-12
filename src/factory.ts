@@ -26,7 +26,7 @@ export function createMediator <
 
     send: (event, modifier) => {
       if(modifier) {
-        context = freezeCopy(modifier(context))
+        context = freezeCopy({ ...context, ...modifier(context) })
       }
 
       const eventHandlers = handlers.get(event)
