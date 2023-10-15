@@ -1,6 +1,6 @@
 {
   "name": "@ortense/mediator",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "A minimal implementation for a dependency-free event broker with internal context for front-end",
   "author": "Marcus Ortense",
   "homepage": "https://github.com/ortense/mediator",
@@ -29,7 +29,6 @@
     "test:watch": "vitest watch",
     "test:coverage": "vitest run --coverage",
     "build": "tsup",
-    "publish": "pnpm test && pnpm lint && pnpm build && npm publish --access public",
     "lint": "eslint src",
     "lint:fix": "eslint --fix src"
   },
