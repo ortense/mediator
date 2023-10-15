@@ -84,7 +84,7 @@ The mediator use simple strings to identify events, think of it as a unique iden
 Optionally, you can define a type that extends from `string` to represent the events that your mediator has.
 
 ```typescript
-type MyEvents = 'value:change' | 'active:toggle' | 'item:added' | 'item:removed'
+type MyEvents = 'loaded' | 'value:change' | 'item:added' | 'item:removed'
 
 export const myMediator = createMediator<MyContext, MyEvents>(initialContext)
 ```
@@ -98,30 +98,44 @@ To listen to events use the `.on` method
 ```typescript
 import { myMediator, MyContext } from './my-mediator'
 
-function myEventListener(ctx: Readonly<MyContext>) {
+function myEventListener(ctx: Readonly<MyContext>, event: MyEvents) {
   // do what you want
 }
 
-myMediator.on('event-name', myEventListener)
+myMediator.on('loaded', myEventListener)
 ```
 
 If you prefer you could use the type `MediatorEventListener`
 
 ```typescript
 import { MediatorEventListener } from '@ortense/mediator'
-import { myMediator, MyContext } from './my-mediator'
+import { myMediator, MyContext, MyEvents } from './my-mediator'
 
-const myEventListener: MediatorEventListener = (ctx) => {
+const myEventListener: MediatorEventListener<MyContext, MyEvents> = (ctx, event) => {
   // do what you want
 }
 
-myMediator.on('event-name', myEventListener)
+myMediator.on('loaded', myEventListener)
+```
+
+You also use the wildcard `*` to listen all events.
+
+```typescript
+myMediator.on('*', (ctx, event) => console.log(ctx, event))
+```
+
+Wildcard listeners could be useful for debugging, for example logging whenever an event is triggered.
+
+```typescript
+myMediator.on('*', (ctx, event) => {
+  console.log(`Event ${event} change the context to`, ctx)
+})
 ```
 
 To stop use the `.off` method
 
 ```typescript
-myMediator.off('event-name', myEventListener)
+myMediator.off('loaded', myEventListener)
 ```
 
 ### Send events
@@ -131,24 +145,24 @@ To send events use the `.send` method.
 ```typescript
 import { myMediator} from './my-mediator'
 
-myMediator.send('hello-world')
+myMediator.send('loaded')
 ```
 
-All listener functions for the `hello-world` event will be called in the order they were added to the mediator.
+All listener functions for the `loaded` event will be called in the order they were added to the mediator.
 
 The `.send` method could receive a function to modifiy the context:
 
 ```typescript
 import { myMediator, MyContext } from './my-mediator'
 
-function toggleActive(ctx: Readonly<MyContext>) {
+function changeValue(ctx: Readonly<MyContext>) {
   return {
     ...ctx,
-    active: !ctx.active
+    value: 'new value'
   }
 }
 
-myMediator.send('toggle', toggleActive)
+myMediator.send('value:change', changeValue)
 ```
 
 If you prefer you could use the `MediatorContextModifier` type.
@@ -157,12 +171,12 @@ If you prefer you could use the `MediatorContextModifier` type.
 import { MediatorContextModifier } from '@ortense/mediator'
 import { myMediator, MyContext } from './my-mediator'
 
-const toggleActive: MediatorContextModifier<MyContext> = (ctx) => ({
+const changeValue: MediatorContextModifier<MyContext> = (ctx) => ({
   ...ctx,
-  active: !ctx.active
+  value: 'new value'
 })
 
-myMediator.send('toggle', toggleActive)
+myMediator.send('value:change', changeValue)
 ```
 
 Or an inline declaration:
@@ -170,7 +184,7 @@ Or an inline declaration:
 ```typescript
 import { myMediator } from './my-mediator'
 
-myMediator.send('toggle', (ctx) => ({ ...ctx, active: !ctx.active }))
+myMediator.send('value:change', (ctx) => ({ ...ctx, active: 'new value }))
 ```
 
 ### Get current context
