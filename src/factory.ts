@@ -6,7 +6,7 @@ export function createMediator <
   Context extends MediatorContext, 
   EventName extends string = string,
 >(initialContext: Context): Mediator<Context, EventName> {
-  const handlers = new Map<string, Array<MediatorEventListener<Context>>>()
+  const handlers = new Map<string, Array<MediatorEventListener<Context, EventName>>>()
   let context = freezeCopy(initialContext)
 
   return {
@@ -29,11 +29,8 @@ export function createMediator <
         context = freezeCopy({ ...context, ...modifier(context) })
       }
 
-      const eventHandlers = handlers.get(event)
-
-      if(eventHandlers !== undefined) {
-        eventHandlers.forEach(fn => fn(context))
-      }
+      handlers.get(event)?.forEach(fn => fn(context, event))
+      handlers.get('*')?.forEach(fn => fn(context, event))
     },
 
     getContext: () => freezeCopy(context),
