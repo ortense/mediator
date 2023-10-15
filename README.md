@@ -2,6 +2,8 @@
 
 # @ortense/mediator
 
+[![install size](https://packagephobia.com/badge?p=@ortense/mediator)](https://packagephobia.com/result?p=@ortense/mediator) [![Coverage Status](https://coveralls.io/repos/github/ortense/mediator/badge.svg?branch=github-actions)](https://coveralls.io/github/ortense/mediator?branch=github-actions)
+
 A minimalistic and dependency-free event mediator with internal context for front-end.
 Written typescript for a good development experience and really light, just 300 bytes in your bundle!
 
