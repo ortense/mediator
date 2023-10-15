@@ -1,9 +1,6 @@
 name: continuous-integration
 
-on: 
-  pull_request:
-    brachs:
-      ['main']
+on: ["push", "pull_request"]
 
 jobs:
   continuous-integration:
@@ -31,3 +28,6 @@ jobs:
 
       - name: Run tests
         run: pnpm test:coverage
+      
+      - name: Coveralls
+        uses: coverallsapp/github-action@v2
