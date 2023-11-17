@@ -1,6 +1,6 @@
 {
   "name": "@ortense/mediator",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "A minimal implementation for a dependency-free event broker with internal context for front-end",
   "author": "Marcus Ortense",
   "homepage": "https://github.com/ortense/mediator",
@@ -30,7 +30,8 @@
     "test:coverage": "vitest run --coverage",
     "build": "tsup",
     "lint": "eslint src",
-    "lint:fix": "eslint --fix src"
+    "lint:fix": "eslint --fix src",
+    "doc": "typedoc"
   },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^6.7.4",
@@ -38,6 +39,7 @@
     "@vitest/coverage-v8": "^0.34.6",
     "eslint": "^8.51.0",
     "tsup": "^7.2.0",
+    "typedoc": "^0.25.3",
     "typescript": "^5.1.6",
     "vitest": "^0.34.6"
   },

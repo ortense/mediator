@@ -6,7 +6,9 @@
     "module": "esnext",
     "rootDir": "./src",
     "declaration": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "allowImportingTsExtensions": true,
+    "noEmit": true
   },
   "include": ["src"],
   "exclude": [

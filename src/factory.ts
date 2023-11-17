@@ -1,7 +1,25 @@
-import { Mediator, MediatorContext, MediatorEventListener } from './types'
+import { Mediator, MediatorContext, MediatorEventListener } from './types.ts'
 
 const freezeCopy = <T>(ctx: T): T => Object.freeze(JSON.parse(JSON.stringify(ctx)))
 
+/**
+ * Creates a Mediator instance with a specific initial context.
+ * @function createMediator
+ * @param {Context} initialContext - The initial context for the Mediator.
+ * @returns {Mediator<Context, EventName>} A Mediator instance with the specified context type and event names.
+ * @template {@extends MediatorContext} Context - The type of the MediatorContext.
+ * @template {@extends string} [EventName] - The type of the event names. @defaultValue string
+ * @example
+ * ```
+ * type MyEvents =  'item:added' | 'item:removed'
+ * 
+ * interface MyContext extends MediatorContext {
+ *   items: number[]
+ * }
+ * 
+ * const myMediator = createMediator<MyContext, MyEvents>(initialContext)
+ * ```
+ */
 export function createMediator <
   Context extends MediatorContext, 
   EventName extends string = string,
