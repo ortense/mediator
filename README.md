@@ -7,6 +7,8 @@
 A minimalistic and dependency-free event mediator with internal context for front-end.
 Written typescript for a good development experience and really light, just 300 bytes in your bundle!
 
+Access the complete documentation at [ortense.github.io/mediator/](https://ortense.github.io/mediator/)
+
 ## Use case
 
 You want to simplify communication between independent components in your web app. The mediator can be used to facilitate the exchange of data and events between different parts of the application without crate a strong coupling, keeping the separation of concerns between the components of your app or external integrations like third party scripts or extensions.
