@@ -28,7 +28,7 @@ export type MediatorContextModifier<Context extends MediatorContext> = (ctx: Rea
  * @template Context - The type of the MediatorContext.
  * @template EventName - The type of the event names.
  */
-export interface Mediator<Context extends MediatorContext, EventName extends string> {
+export type Mediator<Context extends MediatorContext, EventName extends string> = {
   /**
    * Adds an event listener to the Mediator.
    * @method
