@@ -10,8 +10,6 @@ export type JSONArray = JSONValue[]
 /** Represents a dictionary (object) with string keys and values of type JSONValue. */
 export type JSONObject = { [member: string]: JSONValue }
 
-export type Y = Partial<{}>
-
 /** Requires at least one property of T. */
 export type AtLeastOneOf<T> = {
   [K in keyof T]-?: Required<Pick<T, K>>
@@ -35,7 +33,7 @@ export type MediatorContextModifier<Context extends MediatorContext> = (ctx: Rea
  * @template Context - The type of the MediatorContext.
  * @template EventName - The type of the event names.
  */
-export type Mediator<Context extends MediatorContext, EventName extends string> = {
+export interface Mediator<Context extends MediatorContext, EventName extends string> {
   /**
    * Adds an event listener to the Mediator.
    * @method
