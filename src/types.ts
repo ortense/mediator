@@ -10,6 +10,13 @@ export type JSONArray = JSONValue[]
 /** Represents a dictionary (object) with string keys and values of type JSONValue. */
 export type JSONObject = { [member: string]: JSONValue }
 
+export type Y = Partial<{}>
+
+/** Requires at least one property of T. */
+export type AtLeastOneOf<T> = {
+  [K in keyof T]-?: Required<Pick<T, K>>
+}[keyof T]
+
 /** Represents a context for the Mediator, which is a JSON serializable object. */
 export type MediatorContext = JSONObject
 
@@ -20,7 +27,7 @@ export type WildcardEvent = '*'
 export type MediatorEventListener<Context extends MediatorContext, EventName extends string> = (ctx: Readonly<Context>, eventName: EventName) => void
 
 /** Represents a context modifier function for Mediator events. */
-export type MediatorContextModifier<Context extends MediatorContext> = (ctx: Readonly<Context>) => Context
+export type MediatorContextModifier<Context extends MediatorContext> = (ctx: Readonly<Context>) => AtLeastOneOf<Context>
 
 /**
  * @interface Mediator
