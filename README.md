@@ -161,7 +161,6 @@ import { myMediator, MyContext } from './my-mediator'
 
 function changeValue(ctx: Readonly<MyContext>) {
   return {
-    ...ctx,
     value: 'new value'
   }
 }
@@ -176,7 +175,6 @@ import { MediatorContextModifier } from '@ortense/mediator'
 import { myMediator, MyContext } from './my-mediator'
 
 const changeValue: MediatorContextModifier<MyContext> = (ctx) => ({
-  ...ctx,
   value: 'new value'
 })
 

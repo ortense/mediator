@@ -1,7 +1,7 @@
 import { vitest, describe, it, expect } from 'vitest'
 import { createMediator } from './factory'
 
-type Context = { done: boolean }
+type Context = { done: boolean, message?: string }
 const initial = { done: false }
 
 describe('Mediator', () => {
@@ -46,6 +46,17 @@ describe('Mediator', () => {
       expect(listenerOne).toBeCalledWith({ done: false }, 'toggle')
       expect(listenerTwo).toBeCalledWith({ done: false }, 'toggle')
       expect(listenerDone).toBeCalledWith({ done: true }, 'done')
+    })
+
+    describe('Require at least one property of Context', () => {
+      it('should increment context with modifier return', () => { 
+        const mediator = createMediator<Context>({ done: true })
+        mediator.send('message', () => ({ message: 'test' }))
+        expect(mediator.getContext()).toEqual({
+          done: true,
+          message: 'test',
+        })
+      })
     })
   })
 
