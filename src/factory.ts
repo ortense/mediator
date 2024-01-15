@@ -1,7 +1,5 @@
 import { Mediator, MediatorContext, MediatorEventListener } from './types.ts'
 
-const freezeCopy = <T>(ctx: T): T => Object.freeze(JSON.parse(JSON.stringify(ctx)))
-
 /**
  * Creates a Mediator instance with a specific initial context.
  * @function createMediator
@@ -25,7 +23,7 @@ export function createMediator <
   EventName extends string = string,
 >(initialContext: Context): Mediator<Context, EventName> {
   const handlers = new Map<string, Array<MediatorEventListener<Context, EventName>>>()
-  let context = freezeCopy(initialContext)
+  let context = structuredClone(initialContext)
 
   return {
     on: (event, listener) => {
@@ -44,13 +42,13 @@ export function createMediator <
 
     send: (event, modifier) => {
       if(modifier) {
-        context = freezeCopy({ ...context, ...modifier(context) })
+        context = structuredClone({ ...context, ...modifier(context) })
       }
 
       handlers.get(event)?.forEach(fn => fn(context, event))
       handlers.get('*')?.forEach(fn => fn(context, event))
     },
 
-    getContext: () => freezeCopy(context),
+    getContext: () => structuredClone(context),
   }
 }
