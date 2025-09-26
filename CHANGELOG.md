@@ -1,5 +1,11 @@
 # @ortense/mediator
 
+## 1.3.1
+
+### Patch Changes
+
+- 0167fc2: move from eslint to biome
+
 ## 1.3.0
 
 ### Minor Changes
