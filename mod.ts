@@ -1,2 +1,2 @@
-export * from './src/factory.ts'
-export * from './src/types.ts'
+export * from "./src/factory.ts";
+export * from "./src/types.ts";
