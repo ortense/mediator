@@ -16,8 +16,8 @@ const copy = <T>(value: T) => structuredClone(value) as T;
  * @param {Context} initialContext - The initial context for the Mediator.
  * @param {MediatorOptions<Context, EventName>} [options] - Optional configuration including middlewares.
  * @returns {Mediator<Context, EventName>} A Mediator instance with the specified context type and event names.
- * @template {@extends MediatorContext} Context - The type of the MediatorContext.
- * @template {@extends string} [EventName] - The type of the event names. @defaultValue string
+ * @template Context - The type of the MediatorContext that extends MediatorContext.
+ * @template EventName - The type of the event names that extends string. Defaults to string.
  * @example
  * ```
  * type MyEvents = 'item:added' | 'item:removed'
