@@ -1,33 +1,152 @@
-/** Represents a JSON primitive serializable value that can be a string, number, boolean, or null. */
-export type JSONPrimitive = string | number | boolean | null;
+// === UTILITY TYPES ===
 
-/** Represents a JSON serializable value that can be a primitive, a array, or a object. */
-export type JSONValue = JSONPrimitive | JSONArray | JSONObject;
+/** Represents a value that can be T or undefined */
+export type Maybe<T> = T | undefined;
 
-/** Represents a array of of JSON serializable values. */
-export type JSONArray = JSONValue[];
+/** Represents a nullable value that can be T or null */
+export type Nullable<T> = T | null;
 
-/** Represents a dictionary (object) with string keys and values of type JSONValue. */
-export type JSONObject = { [member: string]: JSONValue };
-
-/** Requires at least one property of T. */
+/** Requires at least one property of T */
 export type AtLeastOneOf<T> = {
 	[K in keyof T]-?: Required<Pick<T, K>>;
 }[keyof T];
 
-/** Represents a context for the Mediator, which is a JSON serializable object. */
+// === JSON TYPES ===
+
+/** Represents a JSON primitive serializable value that can be a string, number, boolean, or null */
+export type JSONPrimitive = string | number | boolean | null;
+
+/** Represents a array of of JSON serializable values */
+export type JSONArray = JSONValue[];
+
+/** Represents a dictionary (object) with string keys and values of type JSONValue */
+export type JSONObject = { [member: string]: JSONValue };
+
+/** Represents a JSON serializable value that can be a primitive, a array, or a object */
+export type JSONValue = JSONPrimitive | JSONArray | JSONObject;
+
+// === MEDIATOR CORE TYPES ===
+
+/** Represents a context for the Mediator, which is a JSON serializable object */
 export type MediatorContext = JSONObject;
 
-/** Represents an event that acts as a wildcard, matching any event. */
+/** Represents an event that acts as a wildcard, matching any event */
 export type WildcardEvent = "*";
 
-/** Represents a listener function for Mediator events. */
+// === MIDDLEWARE TYPES ===
+
+/**
+ * Represents the data passed to middleware functions.
+ * @template Context - The type of the MediatorContext.
+ */
+export type MediatorMiddlewareInput<Context extends MediatorContext> = {
+	/** The pending changes that will be applied to the context */
+	pendingChanges: Nullable<AtLeastOneOf<Context>>;
+};
+
+/**
+ * Represents a cancel event propagation type.
+ * When returned from a middleware, it stops the event processing entirely.
+ */
+export type MediatorCancelEvent = {
+	/** Indicates that the event should be cancelled */
+	cancel: true;
+};
+
+/**
+ * Represents the output data returned from middleware functions.
+ * Can be undefined (pass through), modified input data, or a cancel event.
+ * @template Context - The type of the MediatorContext.
+ */
+export type MediatorMiddlewareOutput<Context extends MediatorContext> = Maybe<
+	MediatorMiddlewareInput<Context> | MediatorCancelEvent
+>;
+
+/**
+ * Represents a middleware function for Mediator events.
+ * Middlewares execute before event listeners and can observe, transform, or cancel events.
+ * @template Context - The type of the MediatorContext.
+ * @template EventName - The type of the event names.
+ * @param context - The immutable context snapshot (same for all middlewares).
+ * @param input - The input data containing pending changes.
+ * @param event - The event name being processed.
+ * @returns Either undefined (pass through), modified input data, or a cancel event.
+ * @example
+ * ```
+ * // Logger middleware (observes only)
+ * const logger: MediatorMiddleware<MyContext, string> = (context, input, event) => {
+ *   console.log(`Event ${event} triggered`)
+ *   // No return - passes through unchanged
+ * }
+ *
+ * // Validation middleware (can cancel)
+ * const validator: MediatorMiddleware<MyContext, string> = (context, input, event) => {
+ *   if (input.pendingChanges && 'count' in input.pendingChanges && input.pendingChanges.count < 0) {
+ *     return { cancel: true } // Stop processing
+ *   }
+ *   return input // Pass through
+ * }
+ *
+ * // Transform middleware (modifies data)
+ * const transformer: MediatorMiddleware<MyContext, string> = (context, input, event) => {
+ *   return {
+ *     pendingChanges: {
+ *       ...(input.pendingChanges ?? {}),
+ *       timestamp: Date.now()
+ *     }
+ *   }
+ * }
+ * ```
+ */
+export type MediatorMiddleware<
+	Context extends MediatorContext,
+	EventName extends string = string,
+> = (
+	context: Readonly<Context>,
+	input: MediatorMiddlewareInput<Context>,
+	event: EventName,
+) => MediatorMiddlewareOutput<Context>;
+
+// === CONFIGURATION TYPES ===
+
+/**
+ * Represents a middleware configuration option.
+ * Defines which events a middleware should handle and the handler function.
+ * @template Context - The type of the MediatorContext.
+ * @template EventName - The type of the event names.
+ */
+export type MediatorMiddlewareConfig<
+	Context extends MediatorContext,
+	EventName extends string = string,
+> = {
+	/** The event name or wildcard (*) to match */
+	event: EventName | WildcardEvent;
+	/** The middleware handler function */
+	handler: MediatorMiddleware<Context, EventName>;
+};
+
+/**
+ * Represents the options for creating a Mediator instance.
+ * @template Context - The type of the MediatorContext.
+ * @template EventName - The type of the event names.
+ */
+export type MediatorOptions<
+	Context extends MediatorContext,
+	EventName extends string = string,
+> = {
+	/** Optional array of middleware configurations */
+	middlewares?: MediatorMiddlewareConfig<Context, EventName>[];
+};
+
+// === FUNCTION TYPES ===
+
+/** Represents a listener function for Mediator events */
 export type MediatorEventListener<
 	Context extends MediatorContext,
 	EventName extends string,
 > = (ctx: Readonly<Context>, eventName: EventName) => void;
 
-/** Represents a context modifier function for Mediator events. */
+/** Represents a context modifier function for Mediator events */
 export type MediatorContextModifier<Context extends MediatorContext> = (
 	ctx: Readonly<Context>,
 ) => AtLeastOneOf<Context>;
