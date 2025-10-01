@@ -5,6 +5,9 @@ on: ["push", "pull_request"]
 jobs:
   continuous-integration:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
 
     steps:
       - name: Checkout
