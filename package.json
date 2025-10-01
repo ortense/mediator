@@ -1,6 +1,6 @@
 {
 	"name": "@ortense/mediator",
-	"version": "1.3.0",
+	"version": "1.4.0",
 	"description": "A minimal implementation for a dependency-free event broker with internal context for front-end",
 	"author": "Marcus Ortense",
 	"homepage": "https://github.com/ortense/mediator",
