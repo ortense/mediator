@@ -33,7 +33,7 @@
 		"lint:fix": "biome check --write",
 		"doc": "typedoc",
 		"change": "changeset",
-		"release": "tsup && typedoc && changeset publish --access public && npx jsr publish"
+		"release": "tsup && typedoc && changeset publish --access public && pnpm dlx jsr publish"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.2.4",
