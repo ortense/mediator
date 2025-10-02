@@ -1,6 +1,6 @@
 {
 	"name": "@ortense/mediator",
-	"version": "1.4.0",
+	"version": "1.4.1",
 	"description": "A minimal implementation for a dependency-free event broker with internal context for front-end",
 	"author": "Marcus Ortense",
 	"homepage": "https://github.com/ortense/mediator",
@@ -33,8 +33,8 @@
 		"lint:fix": "biome check --write",
 		"doc": "typedoc",
 		"change": "changeset",
-    "release:npm": "changeset publish --access public",
-    "release:jsr": "pnpm dlx jsr publish --allow-dirty",
+		"release:npm": "changeset publish --access public",
+		"release:jsr": "pnpm dlx jsr publish --allow-dirty",
 		"release": "pnpm build && pnpm doc && pnpm release:npm"
 	},
 	"devDependencies": {
