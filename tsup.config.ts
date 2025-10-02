@@ -5,5 +5,6 @@ export default defineConfig({
 	clean: true,
 	format: ["esm", "cjs"],
 	dts: true,
+	minify: true,
 	outDir: "./dist",
 });

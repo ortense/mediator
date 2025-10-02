@@ -1,9 +1,10 @@
-name: continuous-integration
+name: manual-release-jsr
 
-on: ["push", "pull_request"]
+on:
+  workflow_dispatch:
 
 jobs:
-  continuous-integration:
+  publish-jsr:
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -23,14 +24,11 @@ jobs:
         with:
           version: 8
 
-      - name: Intall Dependencies
+      - name: Install dependencies
         run: pnpm install
 
       - name: Build
         run: pnpm build
 
-      - name: Run tests
-        run: pnpm test:coverage
-
-      - name: Coveralls
-        uses: coverallsapp/github-action@v2
+      - name: Publish to JSR
+        run: pnpm release:jsr
