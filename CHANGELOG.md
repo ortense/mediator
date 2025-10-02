@@ -1,5 +1,11 @@
 # @ortense/mediator
 
+## 1.4.1
+
+### Patch Changes
+
+- 77c8630: fix the publication error in the ci
+
 ## 1.4.0
 
 ### Minor Changes
